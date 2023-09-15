@@ -1,6 +1,6 @@
 {
   "name": "leaflet-heatmap",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "heatmap.js Leaflet Overlay",
   "homepage": "https://www.patrick-wied.at/static/heatmapjs/",
   "main": "src/leaflet-heatmap.js",

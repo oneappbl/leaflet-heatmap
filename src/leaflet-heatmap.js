@@ -124,7 +124,7 @@
 
 
         // we don't wanna render points that are not even on the map ;-)
-        if (!bounds.contains(latlng)) {
+        if (this.cfg.checkBounds !== false && !bounds.contains(latlng)) {
           continue;
         }
         // local max is the maximum within current bounds
