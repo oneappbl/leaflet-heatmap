@@ -1,3 +1,6 @@
+1.0.3   2023/09/21
+    Added 'zoomRadii' to configuration. If set, the radius at zoom level z will be obtained from zoomRadii[z] or the closest available one.
+
 1.0.2   2023/09/15
     Added 'checkBounds' to configuration, if set to false, don't filter out data based on current view bounds.
     This was needed for some projections where the map.getBounds() isn't quite right. e.g. projection not rectangular.

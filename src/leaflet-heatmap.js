@@ -9,8 +9,8 @@
   // Supports UMD. AMD, CommonJS/Node.js and browser context
   if (typeof module !== "undefined" && module.exports) {
     module.exports = factory(
-      require('heatmap.js'),
-      require('leaflet')
+        require('heatmap.js'),
+        require('leaflet')
     );
   } else if (typeof define === "function" && define.amd) {
     define(['heatmap.js', 'leaflet'], factory);
@@ -62,7 +62,7 @@
 
       if (!this._heatmap) {
         this._heatmap = h337.create(this.cfg);
-      } 
+      }
 
       // this resets the origin and redraws whenever
       // the zoom changed or the map has been moved
@@ -83,15 +83,15 @@
     },
     _draw: function() {
       if (!this._map) { return; }
-      
+
       var mapPane = this._map.getPanes().mapPane;
-      var point = mapPane._leaflet_pos;      
+      var point = mapPane._leaflet_pos;
 
       // reposition the layer
       this._el.style.position = 'absolute';
       this._el.style[HeatmapOverlay.CSS_TRANSFORM] = 'translate(' +
-        -Math.round(point.x) + 'px,' +
-        -Math.round(point.y) + 'px)';
+          -Math.round(point.x) + 'px,' +
+          -Math.round(point.y) + 'px)';
 
       this._update();
     },
@@ -116,7 +116,7 @@
       var localMin = 0;
       var valueField = this.cfg.valueField;
       var len = this._data.length;
-    
+
       while (len--) {
         var entry = this._data[len];
         var value = entry[valueField];
@@ -139,6 +139,12 @@
 
         if (entry.radius) {
           radius = entry.radius * radiusMultiplier;
+        } else if (this.cfg.zoomRadii) {
+          if (this.cfg.zoomRadii.length > zoom) {
+            radius = this.cfg.zoomRadii[zoom];
+          } else {
+            radius = this.cfg.zoomRadii[this.cfg.zoomRadii.length - 1];
+          }
         } else {
           radius = (this.cfg.radius || 2) * radiusMultiplier;
         }
@@ -160,12 +166,12 @@
       var latField = this.cfg.latField || 'lat';
       var lngField = this.cfg.lngField || 'lng';
       var valueField = this.cfg.valueField || 'value';
-    
+
       // transform data to latlngs
       var data = data.data;
       var len = data.length;
       var d = [];
-    
+
       while (len--) {
         var entry = data[len];
         var latlng = new L.LatLng(entry[latField], entry[lngField]);
@@ -177,7 +183,7 @@
         d.push(dataObj);
       }
       this._data = d;
-    
+
       this._draw();
     },
     // experimential... not ready.
@@ -194,7 +200,7 @@
         var entry = pointOrArray;
         var latlng = new L.LatLng(entry[latField], entry[lngField]);
         var dataObj = { latlng: latlng };
-        
+
         dataObj[valueField] = entry[valueField];
         this._max = Math.max(this._max, dataObj[valueField]);
         this._min = Math.min(this._min, dataObj[valueField]);
@@ -208,7 +214,7 @@
     },
     _reset: function () {
       this._origin = this._map.layerPointToLatLng(new L.Point(0, 0));
-      
+
       var size = this._map.getSize();
       if (this._width !== size.x || this._height !== size.y) {
         this._width  = size.x;
@@ -220,7 +226,7 @@
         this._heatmap._renderer.setDimensions(this._width, this._height);
       }
       this._draw();
-    } 
+    }
   });
 
   HeatmapOverlay.CSS_TRANSFORM = (function() {
